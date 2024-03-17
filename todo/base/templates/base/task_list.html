@@ -1,0 +1,79 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<h1>My ToDo list</h1>
+
+<style>
+    table.greyGridTable {
+  border: 2px solid #ffffff;
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+table.greyGridTable td,
+table.greyGridTable th {
+  border: 1px solid #ffffff;
+  padding: 3px 4px;
+}
+table.greyGridTable tbody td {
+  font-size: 13px;
+}
+table.greyGridTable td:nth-child(even) {
+  background: #ebebeb;
+}
+table.greyGridTable thead {
+  background: #ffffff;
+  border-bottom: 4px solid #333333;
+}
+table.greyGridTable thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333333;
+  text-align: center;
+  border-left: 2px solid #333333;
+}
+table.greyGridTable thead th:first-child {
+  border-left: none;
+}
+
+table.greyGridTable tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333333;
+  border-top: 4px solid #333333;
+}
+table.greyGridTable tfoot td {
+  font-size: 14px;
+}
+</style>
+
+<table class="greyGridTable">
+    <thead>
+    <tr>
+        <th>Task</th>
+        <th>Priority</th>
+        <th>Start</th>
+        <th>Deadline</th>
+        <th>Completed</th>
+        <th colspan="2">Actions</th>
+    </tr>
+    </thead>
+    {% for task in tasks %}
+    <tbody>
+    <tr>
+        <td>{{task.title}}</td>
+        <td>{{task.priority}}</td>
+        <td>{{task.date_start}}</td>
+        <td>{{task.date_end}}</td>
+        <td>{{task.complete}}</td>
+        <td><a href="{% url 'task-update' task.id %}"> Edit </a></td>  
+        <td><a href="{% url 'task-delete' task.id %}"> Delete </a></td>  
+    </tr>
+    </tbody>
+    {% empty %}
+<h3> you have no tasks yet</h3>
+{% endfor %}
+</table>
+
+<a href="{% url 'task-create' %}">Add task</a>
+
+{% endblock content %}
